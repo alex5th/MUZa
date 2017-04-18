@@ -18,7 +18,7 @@ void output::instrument(QString p, QString n, int m)
 
 output::output()
 {
-    QFile file("adressbook.xml");
+    QFile file("song.xml");
     if(file.open(QIODevice::WriteOnly)) {
         stream.setDevice(&file);
         stream.setAutoFormatting(true);
@@ -43,12 +43,14 @@ output::output()
         stream.writeAttribute("id", "P0");
         stream.writeStartElement("measure");
         stream.writeAttribute("number", "0");
-
         stream.writeEndElement();
         stream.writeEndElement();
 
         stream.writeStartElement("part");
         stream.writeAttribute("id", "P1");
+        stream.writeStartElement("measure");
+        stream.writeAttribute("number", "0");
+        stream.writeEndElement();
         stream.writeEndElement();
 
         stream.writeEndDocument();

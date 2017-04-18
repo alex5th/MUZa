@@ -25,7 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    output.cpp
+    output.cpp \
+    song.cpp \
+    part.cpp \
+    measure.cpp \
+    note.cpp
 
 HEADERS  += mainwindow.h \
-    output.h
+    output.h \
+    song.h \
+    part.h \
+    measure.h \
+    note.h
