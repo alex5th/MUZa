@@ -1,12 +1,12 @@
 #include "output.h"
 #include <QDate>
 
-void output::instrument(QString p, QString n, int m)
+void Output::instrument(QString p, QString n, int m)
 {
     stream.writeStartElement("score-part");
     stream.writeAttribute("id", p);
     stream.writeTextElement("part-name", n);
-    stream.writeTextElement("part-abbreviation", n);
+    stream.writeTextElement("part-abbreviation", QString(n[0]));
     stream.writeStartElement("midi-instrument");
     stream.writeAttribute("id", p);
     stream.writeTextElement("midi-channel", "1");
@@ -15,8 +15,17 @@ void output::instrument(QString p, QString n, int m)
     stream.writeEndElement();
 }
 
+void Output::createPart(QString p)
+{
+    stream.writeStartElement("part");
+    stream.writeAttribute("id", p);
+    stream.writeStartElement("measure");
+    stream.writeAttribute("number", "0");
+    stream.writeEndElement();
+    stream.writeEndElement();
+}
 
-output::output()
+Output::Output()
 {
     QFile file("song.xml");
     if(file.open(QIODevice::WriteOnly)) {
@@ -39,19 +48,9 @@ output::output()
 
         stream.writeEndElement();
 
-        stream.writeStartElement("part");
-        stream.writeAttribute("id", "P0");
-        stream.writeStartElement("measure");
-        stream.writeAttribute("number", "0");
-        stream.writeEndElement();
-        stream.writeEndElement();
+        createPart("P0");
+        createPart("P1");
 
-        stream.writeStartElement("part");
-        stream.writeAttribute("id", "P1");
-        stream.writeStartElement("measure");
-        stream.writeAttribute("number", "0");
-        stream.writeEndElement();
-        stream.writeEndElement();
 
         stream.writeEndDocument();
         file.close();

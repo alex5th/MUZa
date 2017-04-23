@@ -4,12 +4,13 @@
 #include <QXmlStreamWriter>
 #include <QFile>
 #include <QString>
-class output
+class Output
 {
     QXmlStreamWriter stream;
 public:
-    output();
+    Output();
     void instrument(QString p, QString n, int m);
+    void createPart(QString p);
 };
 
 #endif // OUTPUT_H

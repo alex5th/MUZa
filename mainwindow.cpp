@@ -4,7 +4,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    output a;
+    Output a;
 }
 
 MainWindow::~MainWindow()

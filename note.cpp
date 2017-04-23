@@ -1,6 +1,6 @@
 #include "note.h"
 
-note::note()
+Note::Note()
 {
 
 }

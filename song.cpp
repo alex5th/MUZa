@@ -1,6 +1,6 @@
 #include "song.h"
 
-song::song()
+Song::Song()
 {
 
 }

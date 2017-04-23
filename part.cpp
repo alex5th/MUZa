@@ -1,6 +1,6 @@
 #include "part.h"
 
-part::part()
+Part::Part()
 {
 
 }

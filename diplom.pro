@@ -29,11 +29,13 @@ SOURCES += main.cpp\
     song.cpp \
     part.cpp \
     measure.cpp \
-    note.cpp
+    note.cpp \
+    rest.cpp
 
 HEADERS  += mainwindow.h \
     output.h \
     song.h \
     part.h \
     measure.h \
-    note.h
+    note.h \
+    rest.h

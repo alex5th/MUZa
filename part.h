@@ -3,11 +3,12 @@
 #include <measure.h>
 #include <QVector>
 
-class part
+class Part
 {
-    QVector<measure> m;
+    QVector<Measure> m;
+    int tempo;
 public:
-    part();
+    Part();
 };
 
 #endif // PART_H

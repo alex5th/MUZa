@@ -1,13 +1,13 @@
 #ifndef MEASURE_H
 #define MEASURE_H
-#include <note.h>
+#include <rest.h>
 #include <QVector>
 
-class measure
+class Measure
 {
-QVector<note> n;
+QVector<Rest> n;
 public:
-    measure();
+    Measure();
 };
 
 #endif // MEASURE_H

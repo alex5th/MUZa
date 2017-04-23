@@ -1,6 +1,6 @@
 #include "measure.h"
 
-measure::measure()
+Measure::Measure()
 {
 
 }
