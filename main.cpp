@@ -2,11 +2,13 @@
 #include "output.h"
 #include <QApplication>
 
-void main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
-//    return a.exec();
-    Output a;
+       Output b;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+
+    return a.exec();
+
 }

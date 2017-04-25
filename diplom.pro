@@ -39,3 +39,5 @@ HEADERS  += mainwindow.h \
     measure.h \
     note.h \
     rest.h
+
+FORMS +=
