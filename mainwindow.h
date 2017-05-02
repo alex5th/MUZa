@@ -17,6 +17,10 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 private:
+    QFile* file = new QFile;
+    QVector<int> lad;
+    QVector<QVector<int>> acc;
+
     QWidget* w = new QWidget;
     QVBoxLayout* lm = new QVBoxLayout;
     QHBoxLayout* lh = new QHBoxLayout;
@@ -26,7 +30,7 @@ private:
     QComboBox* cb = new QComboBox;
     QStringList tl;
     QPushButton* pb1 = new QPushButton("Загрузка лада");
-    QPushButton* pb2 = new QPushButton("Загрузка аккомопнента");
+    QPushButton* pb2 = new QPushButton("Загрузка аккомпанемента");
     QPushButton* pb0 = new QPushButton("Создание композиции");
 
 public:
@@ -36,7 +40,9 @@ public:
     QGroupBox* createGB2();
     ~MainWindow();
 public slots:
-    void qweq();
+    void enter();
+    void pp1();
+    void pp2();
 };
 
 #endif // MAINWINDOW_H

@@ -1,12 +1,11 @@
 #ifndef PART_H
 #define PART_H
-#include <measure.h>
+#include <rest.h>
 #include <QVector>
 
 class Part
 {
-    QVector<Measure> m;
-    int tempo;
+    QVector<QVector<Rest>> m;    
 public:
     Part();
 };

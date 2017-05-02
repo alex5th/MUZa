@@ -5,6 +5,7 @@
 class Rest //возможно будет виртуалка, смотри!!!
 {
     int duration;
+    bool dot;
 public:
     Rest();
 };
