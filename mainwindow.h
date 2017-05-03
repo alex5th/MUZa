@@ -25,7 +25,7 @@ private:
     QVBoxLayout* lm = new QVBoxLayout;
     QHBoxLayout* lh = new QHBoxLayout;
     QLabel* lb0 = new QLabel("Краткое описание как этим пользоваться");
-    QRadioButton rb[3][3];
+    QRadioButton rb[2][3];
     QLabel* lb4 = new QLabel("Тоника");
     QComboBox* cb = new QComboBox;
     QStringList tl;
@@ -37,7 +37,6 @@ public:
     MainWindow(QWidget *parent = 0);
     QGroupBox* createGB0();
     QGroupBox* createGB1();
-    QGroupBox* createGB2();
     ~MainWindow();
 public slots:
     void enter();

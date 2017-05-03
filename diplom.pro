@@ -27,14 +27,12 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     output.cpp \
     song.cpp \
-    part.cpp \
     note.cpp \
     rest.cpp
 
 HEADERS  += mainwindow.h \
     output.h \
     song.h \
-    part.h \
     note.h \
     rest.h
 

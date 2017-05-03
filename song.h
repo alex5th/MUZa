@@ -1,15 +1,17 @@
 #ifndef SONG_H
 #define SONG_H
-#include <part.h>
+#include <rest.h>
 #include <QVector>
 
 class Song
 {
-    QVector<Part> p;
+    QVector<int> chords;
+    QVector<QVector<Rest>> p0; //партия аккомпонимента
+    QVector<QVector<Rest>> p1; //партия мелодии
     int tempo;
-    bool accident; //0 - доминирование диезов, 1 - доминирование бемолей в ладу
+    QVector<int> st;
 public:
-    Song(QVector<int> lad, QVector<QVector<int>> acc, int tempo, int lengthAcc, int bias);
+    Song(QVector<int> lad, QVector<QVector<int>> acc, int tempo, int lengthAcc, int tonic);
 };
 
 #endif // SONG_H

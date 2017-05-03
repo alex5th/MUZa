@@ -9,20 +9,17 @@ void MainWindow::enter()
 {
     int tempo;
     int lengthAcc;
-    int bias; //смещение аккордов 0 - 0, 2 - (-1/4) 4 - (-1/2)
-    for (int i=0; i<3; ++i)
+    for (int i=0; i<2; ++i)
     {
     if (rb[0][i].isChecked())
         tempo = rb[0][i].text().toInt();
     if (rb[1][i].isChecked())
         lengthAcc = rb[1][i].text().toInt();
-    if (rb[2][i].isChecked())
-        bias = rb[2][i].text().toInt();
     }
     qDebug() << cb->currentIndex();
     qDebug() << lad;
     qDebug() << acc;
-    Song s(lad, acc, tempo, lengthAcc, bias);
+    Song s(lad, acc, tempo, lengthAcc, cb->currentIndex());
 }
 
 void MainWindow::pp1()
@@ -90,21 +87,6 @@ QGroupBox* MainWindow::createGB1()
     return gb;
 }
 
-QGroupBox* MainWindow::createGB2()
-{
-    QGroupBox* gb = new QGroupBox("Смещение аккордов");
-    rb[2][0].setText("0");
-    rb[2][1].setText("-1/4");
-    rb[2][2].setText("-1/2");
-    rb[2][0].setChecked(true);
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(&rb[2][0]);
-    vbox->addWidget(&rb[2][1]);
-    vbox->addWidget(&rb[2][2]);
-    vbox->addStretch(1);
-    gb->setLayout(vbox);
-    return gb;
-}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -120,7 +102,6 @@ MainWindow::MainWindow(QWidget *parent)
     lm->addWidget(lb0);
     lm->addWidget(createGB0());
     lm->addWidget(createGB1());
-    lm->addWidget(createGB2());
     lm->addWidget(lb4);
     lm->addWidget(cb);
     lm->addLayout(lh);
