@@ -9,16 +9,13 @@ void MainWindow::enter()
 {
     int tempo;
     int lengthAcc;
-    for (int i=0; i<2; ++i)
+    for (int i=0; i<3; ++i)
     {
     if (rb[0][i].isChecked())
         tempo = rb[0][i].text().toInt();
     if (rb[1][i].isChecked())
         lengthAcc = rb[1][i].text().toInt();
     }
-    qDebug() << cb->currentIndex();
-    qDebug() << lad;
-    qDebug() << acc;
     Song s(lad, acc, tempo, lengthAcc, cb->currentIndex());
 }
 

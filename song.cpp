@@ -11,6 +11,8 @@ Song::Song(QVector<int> lad, QVector<QVector<int> > acc, int tempo, int lengthAc
         tonToCur += i;
     }
 
+    qDebug() << st;
+
     chords.resize(lengthAcc);
     for (int &i: chords)
         i = rand() % st.size();
@@ -32,7 +34,16 @@ Song::Song(QVector<int> lad, QVector<QVector<int> > acc, int tempo, int lengthAc
         for (auto j: acc)
         {
             barPos+=j[0];
-            p0[bar].push_back(Rest());
+            if (j.size() == 1)
+            {
+                p0[bar].push_back(Rest(j[0]));
+            }
+            else for (int k = 1; k < j.size(); ++k)
+            {
+                bool ch = true;
+                if (k == 1) ch = false;
+            p0[bar].push_back(Note(j[0], (i + j[k] - 1) % st.size(), ch));
+            }
         }
     }
 }

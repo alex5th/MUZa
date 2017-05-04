@@ -1,15 +1,13 @@
 #ifndef NOTE_H
 #define NOTE_H
 #include <rest.h>
-#include <QString>
 
 class Note : public Rest
 {
-    QString degree;
-    int octave;
+    int degree;
     bool chord;
 public:
-    Note();
+    Note(int d, int n, bool ch);
 };
 
 #endif // NOTE_H

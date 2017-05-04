@@ -1,6 +1,7 @@
 #ifndef SONG_H
 #define SONG_H
 #include <rest.h>
+#include <note.h>
 #include <QVector>
 
 class Song
