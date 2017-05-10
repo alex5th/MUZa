@@ -1,12 +1,14 @@
 #ifndef NOTE_H
 #define NOTE_H
-#include <rest.h>
 
-class Note : public Rest
+class Note
 {
     int degree;
     bool chord;
+    int duration;
+    bool dot;
 public:
+    Note();
     Note(int d, int n, bool ch);
 };
 

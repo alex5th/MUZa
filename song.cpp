@@ -34,11 +34,12 @@ Song::Song(QVector<int> lad, QVector<QVector<int> > acc, int tempo, int lengthAc
         for (auto j: acc)
         {
             barPos+=j[0];
-            if (j.size() == 1)
-            {
-                p0[bar].push_back(Rest(j[0]));
-            }
-            else for (int k = 1; k < j.size(); ++k)
+//            if (j.size() == 1)
+//            {
+//   по-умолчания 1+3+5, сделай, но не срочно
+//            }
+//            else
+                for (int k = 1; k < j.size(); ++k)
             {
                 bool ch = true;
                 if (k == 1) ch = false;
