@@ -2,16 +2,16 @@
 #define SONG_H
 #include <note.h>
 #include <QVector>
+#include <QDate>
 
 class Song
 {
-    QVector<int> chords;
-    QVector<QVector<Note>> p0; //партия аккомпонимента
-    QVector<QVector<Note>> p1; //партия мелодии
-    int tempo;
-    QVector<int> st;
+    QVector<QVector<Note>> p[2]; //партия аккомпонимента
+//    QVector<int> st;
 public:
-    Song(QVector<int> lad, QVector<QVector<int>> acc, int tempo, int lengthAcc, int tonic);
+    Song(QVector<int> lad, QVector<QVector<int>> acc, int lengthAcc);
+    int getCountBars();
+    Note noteGet();
 };
 
 #endif // SONG_H

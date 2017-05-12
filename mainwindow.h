@@ -12,6 +12,10 @@
 #include <QComboBox>
 #include <QStringList>
 #include "output.h"
+#include <qfiledialog.h>
+#include <QDebug>
+#include <dir.h>
+#include <song.h>
 
 class MainWindow : public QMainWindow
 {

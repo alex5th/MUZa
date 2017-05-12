@@ -1,21 +1,26 @@
 #include "song.h"
-#include <QDebug>
 
 
-Song::Song(QVector<int> lad, QVector<QVector<int> > acc, int tempo, int lengthAcc, int tonic):tempo(tempo)
+int Song::getCountBars()
 {
-    int tonToCur = 0;
-    for(int i: lad)
-    {
-        st.push_back((tonic + tonToCur) % 12);
-        tonToCur += i;
-    }
+    return p[0].size();
+}
 
-    qDebug() << st;
+Song::Song(QVector<int> lad, QVector<QVector<int> > acc, int lengthAcc)
+{
 
+//    int tonToCur = 0;  в XML
+//    for(int i: lad)
+//    {
+//        st.push_back((tonic + tonToCur) % 12);
+//        tonToCur += i;
+//    }
+//    qDebug() << st;
+
+    QVector<int> chords;
     chords.resize(lengthAcc);
     for (int &i: chords)
-        i = rand() % st.size();
+        i = rand() % lad.size();
     chords[lengthAcc - 1] = 0;
 
 
@@ -24,27 +29,36 @@ Song::Song(QVector<int> lad, QVector<QVector<int> > acc, int tempo, int lengthAc
     int accSize = 0;
     for (auto i: acc)
         accSize += i[0];
-    p0.resize(accSize/8.0 * lengthAcc);
-    p1.resize(p0.size());
+    p[0].resize(accSize/8.0 * lengthAcc);
+    p[1].resize(p[0].size());
 
     int barPos = 0;
     int bar = 0;
-    for (int i: chords)         //думай думай как заполнять, учти такт и шаблон не зависимы по размеру
+    for (int i: chords)
     {
         for (auto j: acc)
         {
-            barPos+=j[0];
-//            if (j.size() == 1)
-//            {
-//   по-умолчания 1+3+5, сделай, но не срочно
-//            }
-//            else
-                for (int k = 1; k < j.size(); ++k)
+            if (barPos == 8)
             {
-                bool ch = true;
-                if (k == 1) ch = false;
-            p0[bar].push_back(Note(j[0], (i + j[k] - 1) % st.size(), ch));
+                bar++;
+                barPos = 0;
+                qDebug() << "bar++";
             }
+            if (j.size() == 1)
+            {
+                p[0][bar].push_back(Note(j[0], (i + 1 - 1) % lad.size(), 0));
+                p[0][bar].push_back(Note(j[0], (i + 3 - 1) % lad.size(), 1));
+                p[0][bar].push_back(Note(j[0], (i + 5 - 1) % lad.size(), 1));
+            }
+            else
+                for (int k = 1; k < j.size(); ++k)
+                {
+                    bool ch = true;
+                    if (k == 1) ch = false;
+                    p[0][bar].push_back(Note(j[0], (i + j[k] - 1) % lad.size(), ch));
+
+                }
+            barPos+=j[0];
         }
     }
 }

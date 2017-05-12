@@ -1,7 +1,9 @@
 #ifndef NOTE_H
 #define NOTE_H
 
-class Note
+#include <QDebug>
+
+struct Note
 {
     int degree;
     bool chord;

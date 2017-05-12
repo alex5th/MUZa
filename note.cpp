@@ -1,5 +1,4 @@
 #include "note.h"
-#include <QDebug>
 
 Note::Note()
 {

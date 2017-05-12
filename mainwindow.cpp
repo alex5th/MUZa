@@ -1,9 +1,4 @@
 #include "mainwindow.h"
-#include <qfiledialog.h>
-#include <QDebug>
-#include <dir.h>
-#include <song.h>
-
 
 void MainWindow::enter()
 {
@@ -16,7 +11,8 @@ void MainWindow::enter()
     if (rb[1][i].isChecked())
         lengthAcc = rb[1][i].text().toInt();
     }
-    Song s(lad, acc, tempo, lengthAcc, cb->currentIndex());
+    Song s(lad, acc, lengthAcc);     //темп с тоникой не нужно, нужно в аутпут
+    Output b(s, cb->currentIndex(), tempo);
 }
 
 void MainWindow::pp1()
