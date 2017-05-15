@@ -18,7 +18,7 @@ void Output::createPart(int p)
 {
     stream.writeStartElement("part");
     stream.writeAttribute("id", "P" + QString::number(p));
-    for(int i = 0; i < countBars; ++i)
+    for(int i = 0; i < song.getCountBars(); ++i)
     {
         stream.writeStartElement("measure");
         stream.writeAttribute("number", QString::number(i));
@@ -47,15 +47,39 @@ void Output::createPart(int p)
                 stream.writeStartElement("sound");
                 stream.writeAttribute("tempo", QString::number(tempo));
                 stream.writeEndElement();
+                stream.writeEndElement();
             }
         }
         //тут вставляешь ноты
+        for (int j = 0; j < song.getCountNote(p, i); ++j)
+        {
+            qDebug() << (song(0,i,j).degree + tonic) % 12;
+            stream.writeStartElement("note");
+            if (song(0,i,j).chord)
+            {
+                stream.writeStartElement("chord");
+                stream.writeEndElement();
+            }
+            stream.writeStartElement("pitch");
+            stream.writeTextElement("step", "A");
+            stream.writeTextElement("octave", "3");
+            stream.writeEndElement();
+            stream.writeTextElement("duration", QString::number(song(0,i,j).duration));
+            stream.writeTextElement("type", "quarter");
+            if (song(0,i,j).dot)
+            {
+                stream.writeStartElement("dot");
+                stream.writeEndElement();
+            }
+            stream.writeEndElement();
+        }
+
         stream.writeEndElement();
     }
     stream.writeEndElement();
 }
 
-Output::Output(Song s, int tonic, int tempo):tempo(tempo)
+Output::Output(Song s, int tonic, int tempo):song(s), tonic(tonic), tempo(tempo)
 {
     QFile file("song.xml");
     if(file.open(QIODevice::WriteOnly)) {
@@ -78,7 +102,6 @@ Output::Output(Song s, int tonic, int tempo):tempo(tempo)
 
         stream.writeEndElement();
 
-        countBars = s.getCountBars();
         createPart(0);
         createPart(1);
 

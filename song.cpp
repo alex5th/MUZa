@@ -6,6 +6,16 @@ int Song::getCountBars()
     return p[0].size();
 }
 
+int Song::getCountNote(int p, int x)
+{
+    return this->p[p][x].size();
+}
+
+const Note Song::operator ()(int p, int x, int y)
+{
+    return this->p[p][x][y];
+}
+
 Song::Song(QVector<int> lad, QVector<QVector<int> > acc, int lengthAcc)
 {
 

@@ -10,7 +10,8 @@
 class Output
 {
     QXmlStreamWriter stream;
-    int countBars;
+    Song song;
+    int tonic;
     int tempo;
 public:
     Output(Song s, int tonic, int tempo);

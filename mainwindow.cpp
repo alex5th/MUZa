@@ -11,7 +11,7 @@ void MainWindow::enter()
     if (rb[1][i].isChecked())
         lengthAcc = rb[1][i].text().toInt();
     }
-    Song s(lad, acc, lengthAcc);     //темп с тоникой не нужно, нужно в аутпут
+    Song s(lad, acc, lengthAcc);
     Output b(s, cb->currentIndex(), tempo);
 }
 
