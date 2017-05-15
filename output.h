@@ -5,16 +5,18 @@
 #include <QFile>
 #include <QString>
 #include <QDate>
+#include <QMap>
 #include <song.h>
 
 class Output
 {
     QXmlStreamWriter stream;
+    QStringList steps;
     Song song;
     int tonic;
     int tempo;
 public:
-    Output(Song s, int tonic, int tempo);
+    Output(Song s, QVector<int> lad, int tonic, int tempo);
     void instrument(int p, QString n, int m);
     void createPart(int p);
 };

@@ -14,6 +14,7 @@ void Output::instrument(int p, QString n, int m)
     stream.writeEndElement();
 }
 
+
 void Output::createPart(int p)
 {
     stream.writeStartElement("part");
@@ -52,20 +53,25 @@ void Output::createPart(int p)
         }
         //тут вставляешь ноты
         for (int j = 0; j < song.getCountNote(p, i); ++j)
-        {
-            qDebug() << (song(0,i,j).degree + tonic) % 12;
-            stream.writeStartElement("note");
+        {            stream.writeStartElement("note");
             if (song(0,i,j).chord)
             {
                 stream.writeStartElement("chord");
                 stream.writeEndElement();
             }
             stream.writeStartElement("pitch");
-            stream.writeTextElement("step", "A");
-            stream.writeTextElement("octave", "3");
+            stream.writeTextElement("step", steps[song(0,i,j).degree].left(1));
+            if (steps[song(0,i,j).degree].size() > 1)
+                stream.writeTextElement("alter", steps[song(0,i,j).degree].right(2));
+            stream.writeTextElement("octave", "4");
             stream.writeEndElement();
             stream.writeTextElement("duration", QString::number(song(0,i,j).duration));
-            stream.writeTextElement("type", "quarter");
+            QString type;
+            if (song(0,i,j).duration == 1) type = "eighth";
+            if (song(0,i,j).duration == 2) type = "quarter";
+            if (song(0,i,j).duration == 4) type = "half";
+            if (song(0,i,j).duration == 8) type = "whole";
+            stream.writeTextElement("type", type);
             if (song(0,i,j).dot)
             {
                 stream.writeStartElement("dot");
@@ -79,10 +85,30 @@ void Output::createPart(int p)
     stream.writeEndElement();
 }
 
-Output::Output(Song s, int tonic, int tempo):song(s), tonic(tonic), tempo(tempo)
+Output::Output(Song s, QVector<int> lad, int tonic, int tempo):song(s), tonic(tonic), tempo(tempo)
 {
+    int tonToCur = 0;
+    for(int i: lad)
+    {
+        int temp = (tonic + tonToCur) % 12;
+        if (temp == 0) steps.push_back("C");
+        if (temp == 1) steps.push_back("C+1");
+        if (temp == 2) steps.push_back("D");
+        if (temp == 3) steps.push_back("D+1");
+        if (temp == 4) steps.push_back("E");
+        if (temp == 5) steps.push_back("F");
+        if (temp == 6) steps.push_back("F+1");
+        if (temp == 7) steps.push_back("G");
+        if (temp == 8) steps.push_back("G+1");
+        if (temp == 9) steps.push_back("A");
+        if (temp == 10) steps.push_back("A+1");
+        if (temp == 11) steps.push_back("B");
+        tonToCur += i;
+    }
+
     QFile file("song.xml");
-    if(file.open(QIODevice::WriteOnly)) {
+    if(file.open(QIODevice::WriteOnly))
+    {
         stream.setDevice(&file);
         stream.setAutoFormatting(true);
         stream.writeStartDocument();
@@ -105,9 +131,7 @@ Output::Output(Song s, int tonic, int tempo):song(s), tonic(tonic), tempo(tempo)
         createPart(0);
         createPart(1);
 
-
         stream.writeEndDocument();
         file.close();
     }
-
 }

@@ -16,21 +16,13 @@ const Note Song::operator ()(int p, int x, int y)
     return this->p[p][x][y];
 }
 
-Song::Song(QVector<int> lad, QVector<QVector<int> > acc, int lengthAcc)
+Song::Song(int ladSize, QVector<QVector<int> > acc, int lengthAcc)
 {
-
-//    int tonToCur = 0;  в XML
-//    for(int i: lad)
-//    {
-//        st.push_back((tonic + tonToCur) % 12);
-//        tonToCur += i;
-//    }
-//    qDebug() << st;
 
     QVector<int> chords;
     chords.resize(lengthAcc);
     for (int &i: chords)
-        i = rand() % lad.size();
+        i = rand() % ladSize;
     chords[lengthAcc - 1] = 0;
 
 
@@ -56,16 +48,16 @@ Song::Song(QVector<int> lad, QVector<QVector<int> > acc, int lengthAcc)
             }
             if (j.size() == 1)
             {
-                p[0][bar].push_back(Note(j[0], (i + 1 - 1) % lad.size(), 0));
-                p[0][bar].push_back(Note(j[0], (i + 3 - 1) % lad.size(), 1));
-                p[0][bar].push_back(Note(j[0], (i + 5 - 1) % lad.size(), 1));
+                p[0][bar].push_back(Note(j[0], (i + 1 - 1) % ladSize, 0));
+                p[0][bar].push_back(Note(j[0], (i + 3 - 1) % ladSize, 1));
+                p[0][bar].push_back(Note(j[0], (i + 5 - 1) % ladSize, 1));
             }
             else
                 for (int k = 1; k < j.size(); ++k)
                 {
                     bool ch = true;
                     if (k == 1) ch = false;
-                    p[0][bar].push_back(Note(j[0], (i + j[k] - 1) % lad.size(), ch));
+                    p[0][bar].push_back(Note(j[0], (i + j[k] - 1) % ladSize, ch));
 
                 }
             barPos+=j[0];

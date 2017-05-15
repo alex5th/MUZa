@@ -11,8 +11,8 @@ void MainWindow::enter()
     if (rb[1][i].isChecked())
         lengthAcc = rb[1][i].text().toInt();
     }
-    Song s(lad, acc, lengthAcc);
-    Output b(s, cb->currentIndex(), tempo);
+    Song s(lad.size(), acc, lengthAcc);
+    Output b(s, lad, cb->currentIndex(), tempo);
 }
 
 void MainWindow::pp1()
