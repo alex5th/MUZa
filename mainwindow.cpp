@@ -37,6 +37,7 @@ void MainWindow::pp2()
     fn = QFileDialog::getOpenFileName(0,QString("Выберите нужный аккомпонимент"),"accompaniment",QString("*.acc"));
     file->setFileName(fn);
     file->open(QIODevice::ReadOnly);
+    if (fn!="") acc.clear();
     while (!file->atEnd())
     {
         acc.resize(acc.length()+1);

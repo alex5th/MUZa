@@ -15,5 +15,4 @@ Note::Note(int d, int n, bool ch):degree(n), chord(ch)
         duration = d / 3 * 2;
         dot = true;
     }
-    qDebug() << degree << chord << duration;
 }

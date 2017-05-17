@@ -54,25 +54,25 @@ void Output::createPart(int p)
         //тут вставляешь ноты
         for (int j = 0; j < song.getCountNote(p, i); ++j)
         {            stream.writeStartElement("note");
-            if (song(0,i,j).chord)
+            if (song(p,i,j).chord)
             {
                 stream.writeStartElement("chord");
                 stream.writeEndElement();
             }
             stream.writeStartElement("pitch");
-            stream.writeTextElement("step", steps[song(0,i,j).degree].left(1));
-            if (steps[song(0,i,j).degree].size() > 1)
-                stream.writeTextElement("alter", steps[song(0,i,j).degree].right(2));
+            stream.writeTextElement("step", steps[song(p,i,j).degree].left(1));
+            if (steps[song(p,i,j).degree].size() > 1)
+                stream.writeTextElement("alter", steps[song(p,i,j).degree].right(2));
             stream.writeTextElement("octave", "4");
             stream.writeEndElement();
-            stream.writeTextElement("duration", QString::number(song(0,i,j).duration));
+            stream.writeTextElement("duration", QString::number(song(p,i,j).duration));
             QString type;
-            if (song(0,i,j).duration == 1) type = "eighth";
-            if (song(0,i,j).duration == 2) type = "quarter";
-            if (song(0,i,j).duration == 4) type = "half";
-            if (song(0,i,j).duration == 8) type = "whole";
+            if (song(p,i,j).duration == 1) type = "eighth";
+            if (song(p,i,j).duration == 2) type = "quarter";
+            if (song(p,i,j).duration == 4) type = "half";
+            if (song(p,i,j).duration == 8) type = "whole";
             stream.writeTextElement("type", type);
-            if (song(0,i,j).dot)
+            if (song(p,i,j).dot)
             {
                 stream.writeStartElement("dot");
                 stream.writeEndElement();
@@ -106,7 +106,15 @@ Output::Output(Song s, QVector<int> lad, int tonic, int tempo):song(s), tonic(to
         tonToCur += i;
     }
 
-    QFile file("song.xml");
+    QFile file;
+    int fileNumber = 0;
+    do
+    {
+        file.setFileName("song" + QString::number(fileNumber) + ".xml");
+        ++fileNumber;
+    }
+    while (file.exists());
+
     if(file.open(QIODevice::WriteOnly))
     {
         stream.setDevice(&file);
