@@ -7,7 +7,6 @@
 class Song
 {
     QVector<QVector<Note>> p[2]; //партия аккомпонимента
-//    QVector<int> st;
 public:
     Song(int ladSize, QVector<QVector<int>> acc, int lengthAcc);
     int getCountBars();

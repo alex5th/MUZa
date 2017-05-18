@@ -1,6 +1,11 @@
 #include "output.h"
 
-void Output::instrument(int p, QString n, int m)
+QString Output::getFileName()
+{
+    return file.fileName().remove("files/");
+}
+
+void Output::instrument(int p, QString n)
 {
     stream.writeStartElement("score-part");
     stream.writeAttribute("id", "P" + QString::number(p));
@@ -9,7 +14,7 @@ void Output::instrument(int p, QString n, int m)
     stream.writeStartElement("midi-instrument");
     stream.writeAttribute("id", "P" + QString::number(p));
     stream.writeTextElement("midi-channel", "1");
-    stream.writeTextElement("midi-program", QString::number(m));
+    stream.writeTextElement("midi-program", "1");
     stream.writeEndElement();
     stream.writeEndElement();
 }
@@ -79,7 +84,6 @@ void Output::createPart(int p)
             }
             stream.writeEndElement();
         }
-
         stream.writeEndElement();
     }
     stream.writeEndElement();
@@ -106,11 +110,11 @@ Output::Output(Song s, QVector<int> lad, int tonic, int tempo):song(s), tonic(to
         tonToCur += i;
     }
 
-    QFile file;
+    mkdir("files");
     int fileNumber = 0;
     do
     {
-        file.setFileName("song" + QString::number(fileNumber) + ".xml");
+        file.setFileName("files/song" + QString::number(fileNumber) + ".xml");
         ++fileNumber;
     }
     while (file.exists());
@@ -131,8 +135,8 @@ Output::Output(Song s, QVector<int> lad, int tonic, int tempo):song(s), tonic(to
 
         stream.writeStartElement("part-list");
 
-        instrument(0,"Rhythm",1);
-        instrument(1,"Melody",75);
+        instrument(0,"Rhythm");
+        instrument(1,"Melody");
 
         stream.writeEndElement();
 

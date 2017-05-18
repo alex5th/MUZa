@@ -2,17 +2,14 @@
 
 void MainWindow::enter()
 {
-    int tempo;
-    int lengthAcc;
-    for (int i=0; i<3; ++i)
-    {
-    if (rb[0][i].isChecked())
-        tempo = rb[0][i].text().toInt();
-    if (rb[1][i].isChecked())
-        lengthAcc = rb[1][i].text().toInt();
-    }
-    Song s(lad.size(), acc, lengthAcc);
-    Output b(s, lad, cb->currentIndex(), tempo);
+    Song s(lad.size(), acc, cb2->currentText().toInt());
+    Output b(s, lad, cb3->currentIndex(), cb1->currentText().toInt());
+    QDialog t;
+    t.setWindowFlags(Qt::WindowCloseButtonHint);
+    t.setWindowTitle("Композиция " + b.getFileName() + " готова");
+    t.setFixedSize(250, 1);
+    t.setModal(true);
+    t.exec();
 }
 
 void MainWindow::pp1()
@@ -26,6 +23,7 @@ void MainWindow::pp1()
     if (fn!="") lad.clear();
     for (QString i: temp)
         lad.push_back(i.toInt());
+    if (file->fileName() != "") lb4->setText("Лад: " + QFileInfo(*file).fileName().remove(".lad"));
     file->close();
     if (!lad.empty() && !acc.empty()) pb0->setDisabled(false);
 }
@@ -34,7 +32,7 @@ void MainWindow::pp2()
 {
     QString fn;
     mkdir("accompaniment");
-    fn = QFileDialog::getOpenFileName(0,QString("Выберите нужный аккомпонимент"),"accompaniment",QString("*.acc"));
+    fn = QFileDialog::getOpenFileName(0,QString("Выберите нужный аккомпанемент"),"accompaniment",QString("*.acc"));
     file->setFileName(fn);
     file->open(QIODevice::ReadOnly);
     if (fn!="") acc.clear();
@@ -45,40 +43,9 @@ void MainWindow::pp2()
         for (QString j: temp)
             acc[acc.length()-1].push_back(j.toInt());
     }
+    if (file->fileName() != "") lb5->setText("Аккомпанемент: " + QFileInfo(*file).fileName().remove(".acc"));
     file->close();
     if (!lad.empty() && !acc.empty()) pb0->setDisabled(false);
-}
-
-QGroupBox* MainWindow::createGB0()
-{
-    QGroupBox* gb = new QGroupBox("Темп композиции");
-    rb[0][0].setText("90");
-    rb[0][1].setText("120");
-    rb[0][2].setText("150");
-    rb[0][0].setChecked(true);
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(&rb[0][0]);
-    vbox->addWidget(&rb[0][1]);
-    vbox->addWidget(&rb[0][2]);
-    vbox->addStretch(1);
-    gb->setLayout(vbox);
-    return gb;
-}
-
-QGroupBox* MainWindow::createGB1()
-{
-    QGroupBox* gb = new QGroupBox("Длина аккордовой последовательности");
-    rb[1][0].setText("2");
-    rb[1][1].setText("4");
-    rb[1][2].setText("8");
-    rb[1][0].setChecked(true);
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(&rb[1][0]);
-    vbox->addWidget(&rb[1][1]);
-    vbox->addWidget(&rb[1][2]);
-    vbox->addStretch(1);
-    gb->setLayout(vbox);
-    return gb;
 }
 
 
@@ -87,17 +54,31 @@ MainWindow::MainWindow(QWidget *parent)
 {
     pb0->setDisabled(true);
 
-    tl << "До" <<"До♯/Ре♭" << "Ре" << "Ре♯/Ми♭" << "Ми" <<
+    lb0->setWordWrap(true);
+
+    tl1 << "80" <<"100" << "120" << "160";
+    cb1->addItems(tl1);
+
+    tl2 << "2" <<"4" << "6" << "8";
+    cb2->addItems(tl2);
+
+    tl3 << "До" <<"До♯/Ре♭" << "Ре" << "Ре♯/Ми♭" << "Ми" <<
           "Фа" <<"Фа♯/Соль♭" << "Соль" << "Соль♯/Ля♭" << "Ля" << "Ля♯/Си♭" << "Си";
-    cb->addItems(tl);
-    cb->setMaxVisibleItems(12);
+    cb3->addItems(tl3);
+    cb3->setMaxVisibleItems(12);
+
     this->setCentralWidget(w);
+    this->setWindowTitle("Генератор Хитов 3000");
     w->setLayout(lm);
     lm->addWidget(lb0);
-    lm->addWidget(createGB0());
-    lm->addWidget(createGB1());
+    lm->addWidget(lb1);
+    lm->addWidget(cb1);
+    lm->addWidget(lb2);
+    lm->addWidget(cb2);
+    lm->addWidget(lb3);
+    lm->addWidget(cb3);
     lm->addWidget(lb4);
-    lm->addWidget(cb);
+    lm->addWidget(lb5);
     lm->addLayout(lh);
     lh->addWidget(pb1);
     lh->addWidget(pb2);
