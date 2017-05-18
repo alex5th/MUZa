@@ -34,35 +34,3 @@ HEADERS  += mainwindow.h \
     song.h \
     note.h
 
-FORMS +=
-
-DISTFILES += \
-    accompaniment/bass.acc \
-    accompaniment/dot.acc \
-    accompaniment/simple.acc \
-    accompaniment/standart.acc \
-    lad/натуральные/2_дорийский.lad \
-    lad/натуральные/3_фригийский.lad \
-    lad/натуральные/4_лидийский.lad \
-    lad/натуральные/5_миксолидийский.lad \
-    lad/натуральные/7_локрийский.lad \
-    lad/этнические/хирайоши.lad \
-    lad/этнические/цыганский минор.lad \
-    lad/major.lad \
-    lad/гармонический минор.lad \
-    lad/гармоничский мажор.lad \
-    lad/мажор.lad \
-    lad/мелодический минор.lad \
-    lad/минор.lad \
-    lad/натуральные/2_дорийский.lad \
-    lad/натуральные/3_фригийский.lad \
-    lad/натуральные/4_лидийский.lad \
-    lad/натуральные/5_миксолидийский.lad \
-    lad/натуральные/7_локрийский.lad \
-    lad/этнические/хирайоши.lad \
-    lad/этнические/цыганский минор.lad \
-    lad/гармонический минор.lad \
-    lad/гармоничский мажор.lad \
-    lad/мажор.lad \
-    lad/мелодический минор.lad \
-    lad/минор.lad
