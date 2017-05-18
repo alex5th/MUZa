@@ -68,8 +68,8 @@ void Output::createPart(int p)
             stream.writeTextElement("duration", QString::number(song(p,i,j).duration));
             QString type;
             if (song(p,i,j).duration == 1) type = "eighth";
-            if (song(p,i,j).duration == 2) type = "quarter";
-            if (song(p,i,j).duration == 4) type = "half";
+            if (song(p,i,j).duration == 2 || song(p,i,j).duration == 3) type = "quarter";
+            if (song(p,i,j).duration == 4 || song(p,i,j).duration == 6) type = "half";
             if (song(p,i,j).duration == 8) type = "whole";
             stream.writeTextElement("type", type);
             if (song(p,i,j).dot)
