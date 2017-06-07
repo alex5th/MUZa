@@ -37,11 +37,19 @@ void Output::createPart(int p)
             stream.writeTextElement("beat-type", "4");
             stream.writeEndElement();
             stream.writeStartElement("clef");
-            stream.writeTextElement("sign", "G");
-            stream.writeTextElement("line", "2");
-            stream.writeEndElement();
-            stream.writeEndElement();
             if (p == 0)
+            {
+                stream.writeTextElement("sign", "F");
+                stream.writeTextElement("line", "4");
+            }
+            else
+            {
+                stream.writeTextElement("sign", "G");
+                stream.writeTextElement("line", "2");
+            }
+            stream.writeEndElement();
+            stream.writeEndElement();
+            if (p == 1)
             {
                 stream.writeStartElement("direction");
                 stream.writeStartElement("direction-type");
@@ -68,7 +76,7 @@ void Output::createPart(int p)
             stream.writeTextElement("step", steps[song(p,i,j).degree].left(1));
             if (steps[song(p,i,j).degree].size() > 1)
                 stream.writeTextElement("alter", steps[song(p,i,j).degree].right(2));
-            stream.writeTextElement("octave", "4");
+            stream.writeTextElement("octave", QString::number(p + 3));
             stream.writeEndElement();
             stream.writeTextElement("duration", QString::number(song(p,i,j).duration));
             QString type;
@@ -135,13 +143,15 @@ Output::Output(Song s, QVector<int> lad, int tonic, int tempo):song(s), tonic(to
 
         stream.writeStartElement("part-list");
 
-        instrument(0,"Rhythm");
         instrument(1,"Melody");
+        instrument(0,"Rhythm");
+
 
         stream.writeEndElement();
 
-        createPart(0);
         createPart(1);
+        createPart(0);
+
 
         stream.writeEndDocument();
         file.close();

@@ -45,9 +45,10 @@ Song::Song(int ladSize, QVector<QVector<int> > acc, int lengthAcc)
             }
             if (j.size() == 1)
             {
-                p[0][bar].push_back(Note(j[0], (i + 1 - 1) % ladSize, 0));
-                p[0][bar].push_back(Note(j[0], (i + 3 - 1) % ladSize, 1));
-                p[0][bar].push_back(Note(j[0], (i + 5 - 1) % ladSize, 1));
+                //поиграть потом с рандомностью и флажок, после попадания с 0 на 1
+                p[0][bar].push_back(Note(j[0], (i) % ladSize, 0));
+                for (int k = 1; k < ladSize / 2; ++k)
+                    p[0][bar].push_back(Note(j[0], (i + k * 2) % ladSize, 1));
             }
             else
                 for (int k = 1; k < j.size(); ++k)
@@ -83,7 +84,6 @@ Song::Song(int ladSize, QVector<QVector<int> > acc, int lengthAcc)
         int temp = barPos;
         barPos += i[0];
         i[0] = temp;
-
     }
 
     barPos = 0;
@@ -93,6 +93,7 @@ Song::Song(int ladSize, QVector<QVector<int> > acc, int lengthAcc)
         int getPosAcc = 0;
         for (int j: melody)
         {
+            //            qDebug() << p[0][][].degree;
             if (barPos == 8)
             {
                 bar++;
@@ -112,9 +113,20 @@ Song::Song(int ladSize, QVector<QVector<int> > acc, int lengthAcc)
             if (flag)
             {
                 if (acc[getPosAcc].size() == 1)
-                    p[1][bar].push_back(Note(j,(i + (rand() % 3) * 2) % ladSize, 0));
+                    p[1][bar].push_back(Note(j,(i + (rand() % (ladSize / 2)) * 2) % ladSize, 0));
                 else
-                    p[1][bar].push_back(Note(j,(i + acc[getPosAcc][(rand() % (acc[getPosAcc].size() - 1)) + 1] - 1) % ladSize, 0));
+                {
+                    int temp;
+                    QVector<int> tempV = acc[getPosAcc];
+                    tempV.removeFirst();
+                    do
+                    {
+                        temp = rand() % ladSize;
+                    }
+                    while((tempV.contains(temp % ladSize == 0 ? ladSize : temp % ladSize)) ||
+                          (tempV.contains((temp + 2) % ladSize)));
+                    p[1][bar].push_back(Note(j, (i + temp) % ladSize, 0));
+                }
             }
             else
                 p[1][bar].push_back(Note(j, rand() % ladSize, 0));
