@@ -56,10 +56,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     lb0->setWordWrap(true);
 
-    tl1 << "80" <<"100" << "120" << "160";
+    tl1 << "80" <<"100" << "120" << "140" << "160";
     cb1->addItems(tl1);
 
-    tl2 << "2" <<"4" << "6" << "8";
+    tl2 << "2" <<"4" << "8";
     cb2->addItems(tl2);
 
     tl3 << "До" <<"До♯/Ре♭" << "Ре" << "Ре♯/Ми♭" << "Ми" <<

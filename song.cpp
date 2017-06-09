@@ -19,10 +19,13 @@ const Note Song::operator ()(int p, int x, int y)
 Song::Song(int ladSize, QVector<QVector<int> > acc, int lengthAcc)
 {
 
-    QVector<int> chords;
-    chords.resize(lengthAcc);
-    for (int &i: chords)
-        i = rand() % ladSize;
+    QVector<int> chords(lengthAcc);
+    chords[0] = rand() % ladSize;
+    for (int i = 1; i < lengthAcc - 1; ++i)
+    {
+        do chords[i] = rand() % ladSize;
+        while ((i % 2 == 0) && (chords[i-1] == chords[i]));
+    }
     chords[lengthAcc - 1] = 0;
     qDebug() << chords;
 
@@ -93,7 +96,6 @@ Song::Song(int ladSize, QVector<QVector<int> > acc, int lengthAcc)
         int getPosAcc = 0;
         for (int j: melody)
         {
-            //            qDebug() << p[0][][].degree;
             if (barPos == 8)
             {
                 bar++;
