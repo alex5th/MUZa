@@ -47,8 +47,8 @@ void MainWindow::pp2()
     int test = 0;
     while (!file->atEnd())
     {
-        QStringList temp = QString(file->readLine()).split(QRegExp("[\\D]"),QString::SkipEmptyParts);
-        if ((temp[0] == "5") || (temp[0] == "7"))
+        QStringList temp = QString(file->readLine()).split(QRegExp("[\\D]"), QString::SkipEmptyParts);
+        if ((temp[0] == "5") || (temp[0] == "7") || (temp[0] < "1") || (temp[0] > "8"))
         {
             pp2();
             return;
@@ -58,7 +58,7 @@ void MainWindow::pp2()
     qDebug() << test;
     file->close();
     file->open(QIODevice::ReadOnly);
-    if (fn!="")
+    if (fn != "")
         if (test % 8 != 0)
         {
             pp2();
@@ -68,7 +68,7 @@ void MainWindow::pp2()
     while (!file->atEnd())
     {
         acc.resize(acc.length() + 1);
-        QStringList temp = QString(file->readLine()).split(QRegExp("[\\D]"),QString::SkipEmptyParts);
+        QStringList temp = QString(file->readLine()).split(QRegExp("[\\D]"), QString::SkipEmptyParts);
         for (QString j: temp)
             acc[acc.length() - 1].push_back(j.toInt());
     }
