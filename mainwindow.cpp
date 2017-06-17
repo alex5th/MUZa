@@ -20,7 +20,16 @@ void MainWindow::pp1()
     file->setFileName(fn);
     file->open(QIODevice::ReadOnly);
     QStringList temp = QString(file->readAll()).split(QRegExp("[\\D]"),QString::SkipEmptyParts);
-    if (fn!="") lad.clear();
+    int test = 0;
+    for (QString i: temp)
+        test += i.toInt();
+    if (fn!="")
+        if (test != 12)
+        {
+            pp1();
+            return;
+        }
+        else lad.clear();
     for (QString i: temp)
         lad.push_back(i.toInt());
     if (file->fileName() != "") lb4->setText("Лад: " + QFileInfo(*file).fileName().remove(".lad"));
@@ -35,13 +44,33 @@ void MainWindow::pp2()
     fn = QFileDialog::getOpenFileName(0,QString("Выберите нужный аккомпанемент"),"accompaniment",QString("*.acc"));
     file->setFileName(fn);
     file->open(QIODevice::ReadOnly);
-    if (fn!="") acc.clear();
+    int test = 0;
     while (!file->atEnd())
     {
-        acc.resize(acc.length()+1);
+        QStringList temp = QString(file->readLine()).split(QRegExp("[\\D]"),QString::SkipEmptyParts);
+        if ((temp[0] == "5") || (temp[0] == "7"))
+        {
+            pp2();
+            return;
+        }
+        test += temp[0].toInt();
+    }
+    qDebug() << test;
+    file->close();
+    file->open(QIODevice::ReadOnly);
+    if (fn!="")
+        if (test % 8 != 0)
+        {
+            pp2();
+            return;
+        }
+        else acc.clear();
+    while (!file->atEnd())
+    {
+        acc.resize(acc.length() + 1);
         QStringList temp = QString(file->readLine()).split(QRegExp("[\\D]"),QString::SkipEmptyParts);
         for (QString j: temp)
-            acc[acc.length()-1].push_back(j.toInt());
+            acc[acc.length() - 1].push_back(j.toInt());
     }
     if (file->fileName() != "") lb5->setText("Аккомпанемент: " + QFileInfo(*file).fileName().remove(".acc"));
     file->close();
@@ -63,12 +92,12 @@ MainWindow::MainWindow(QWidget *parent)
     cb2->addItems(tl2);
 
     tl3 << "До" <<"До♯/Ре♭" << "Ре" << "Ре♯/Ми♭" << "Ми" <<
-          "Фа" <<"Фа♯/Соль♭" << "Соль" << "Соль♯/Ля♭" << "Ля" << "Ля♯/Си♭" << "Си";
+           "Фа" <<"Фа♯/Соль♭" << "Соль" << "Соль♯/Ля♭" << "Ля" << "Ля♯/Си♭" << "Си";
     cb3->addItems(tl3);
     cb3->setMaxVisibleItems(12);
 
     this->setCentralWidget(w);
-    this->setWindowTitle("Генератор Хитов 3000");
+    this->setWindowTitle("Автокомпозитор МУЗа");
     w->setLayout(lm);
     lm->addWidget(lb0);
     lm->addWidget(lb1);

@@ -19,7 +19,6 @@ void Output::instrument(int p, QString n)
     stream.writeEndElement();
 }
 
-
 void Output::createPart(int p)
 {
     stream.writeStartElement("part");
@@ -146,12 +145,10 @@ Output::Output(Song s, QVector<int> lad, int tonic, int tempo):song(s), tonic(to
         instrument(1,"Melody");
         instrument(0,"Rhythm");
 
-
         stream.writeEndElement();
 
         createPart(1);
         createPart(0);
-
 
         stream.writeEndDocument();
         file.close();

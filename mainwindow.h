@@ -27,8 +27,10 @@ private:
     QWidget* w = new QWidget;
     QVBoxLayout* lm = new QVBoxLayout;
     QHBoxLayout* lh = new QHBoxLayout;
-    QLabel* lb0 = new QLabel("Эта программа позволяет создать музыкальную заготовку. "
-                             "Обязательно выберите лад и аккомпонимент.");
+    QLabel* lb0 = new QLabel("Автокомпозитор МУЗа позволяет создавать музыкальные заготовки. "
+                             "Обязательно выберите лад и аккомпанемент. "
+                             "Результат сохраняется в виде MusicXML-файла в папке files, "
+                             "которая находится в папке с программой.");
     QLabel* lb1 = new QLabel("Темп композиции");
     QComboBox* cb1 = new QComboBox;
     QStringList tl1;

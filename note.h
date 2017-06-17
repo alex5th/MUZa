@@ -9,7 +9,6 @@ struct Note
     bool chord;
     int duration;
     bool dot;
-public:
     Note();
     Note(int d, int n, bool ch);
 };
