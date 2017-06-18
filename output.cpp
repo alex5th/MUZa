@@ -96,7 +96,7 @@ void Output::createPart(int p)
     stream.writeEndElement();
 }
 
-Output::Output(Song s, QVector<int> lad, int tonic, int tempo):song(s), tonic(tonic), tempo(tempo)
+Output::Output(Song s, QList<int> lad, int tonic, int tempo):song(s), tonic(tonic), tempo(tempo)
 {
     int tonToCur = 0;
     for(int i: lad)

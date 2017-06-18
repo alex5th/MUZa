@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 private:
     QFile* file = new QFile;
-    QVector<int> lad;
+    QList<int> lad;
     QVector<QVector<int>> acc;
 
     QWidget* w = new QWidget;
