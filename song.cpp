@@ -16,7 +16,8 @@ const Note Song::operator ()(int p, int x, int y)
     return this->p[p][x][y];
 }
 
-Song::Song(int ladSize, QVector<QVector<int> > acc, int lengthAcc)
+
+Song::Song(int ladSize, QVector<QVector<int>> acc, int lengthAcc)
 {
 
     QVector<int> chords(lengthAcc);
@@ -30,6 +31,33 @@ Song::Song(int ladSize, QVector<QVector<int> > acc, int lengthAcc)
     qDebug() << chords;
 
     int accSize = 0;
+    if (acc.isEmpty())
+    {
+        for (int i = 0; i < rand() % 2 + 1; ++i)
+        {
+            int barPos = 0;
+            while (barPos < 8)
+            {
+                int temp;
+                QVector<int> vtemp;
+                do
+                {
+                    int r = rand() % 5;
+                    if (r) temp = pow(2, rand() % 3);
+                    else temp = 3 * (rand() % 2 + 1);
+                }
+                while (temp + barPos > 8);
+                barPos += temp;
+                vtemp.push_back(temp);
+                for (int j = 1; j <= 5; j += 2)
+                {
+                    int r = rand() % 3;
+                    if (!r) vtemp.push_back(j);
+                }
+                acc.push_back(vtemp);
+            }
+        }
+    }
     for (auto i: acc)
         accSize += i[0];
     p[0].resize(accSize / 8 * lengthAcc);
@@ -73,7 +101,7 @@ Song::Song(int ladSize, QVector<QVector<int> > acc, int lengthAcc)
         {
             int temp;
             do
-                temp = pow(2, rand() % 3);
+                temp = pow(2, (rand() % (30 - 9) / 10));
             while (temp + barPos > 8);
             barPos += temp;
             melody.push_back(temp);

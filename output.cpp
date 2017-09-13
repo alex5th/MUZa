@@ -136,7 +136,7 @@ Output::Output(Song s, QList<int> lad, int tonic, int tempo):song(s), tonic(toni
         stream.writeStartElement("identification");
         stream.writeStartElement("encoding");
         stream.writeTextElement("encoding-date", QDate::currentDate().toString("yyyy-MM-dd"));
-        stream.writeTextElement("software", "Генератор хитов 3000");
+        stream.writeTextElement("software", "МУЗа");
         stream.writeEndElement();
         stream.writeEndElement();
 

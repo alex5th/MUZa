@@ -8,6 +8,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QComboBox>
+#include <QCheckBox>
 #include <QStringList>
 #include "output.h"
 #include <QFileDialog>
@@ -40,6 +41,7 @@ private:
     QLabel* lb3 = new QLabel("Тоника");
     QComboBox* cb3 = new QComboBox;
     QStringList tl3;
+    QCheckBox* ch1 = new QCheckBox("Автоаккомпанемент");
     QLabel* lb4 = new QLabel("Лад: ");
     QLabel* lb5 = new QLabel("Аккомпанемент: ");
     QPushButton* pb1 = new QPushButton("Загрузка лада");
@@ -49,10 +51,12 @@ private:
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void check();
 public slots:
     void enter();
     void pp1();
     void pp2();
+    void pp0();
 };
 
 #endif // MAINWINDOW_H

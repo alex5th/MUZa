@@ -2,7 +2,8 @@
 
 void MainWindow::enter()
 {
-    Song s(lad.size(), acc, cb2->currentText().toInt());
+    QVector<QVector<int>> accSend;
+    Song s(lad.size(), (ch1->isChecked())? accSend : acc, cb2->currentText().toInt());
     Output b(s, lad, cb3->currentIndex(), cb1->currentText().toInt());
     QDialog t;
     t.setWindowFlags(Qt::WindowCloseButtonHint);
@@ -10,6 +11,18 @@ void MainWindow::enter()
     t.setFixedSize(250, 1);
     t.setModal(true);
     t.exec();
+}
+
+void MainWindow::check()
+{
+    pb0->setDisabled(((!acc.empty() || ch1->isChecked()) && !lad.empty())? false : true);
+}
+
+void MainWindow::pp0()
+{
+    pb2->setDisabled((ch1->isChecked())? true : false);
+    lb5->setDisabled((ch1->isChecked())? true : false);
+    check();
 }
 
 void MainWindow::pp1()
@@ -34,7 +47,7 @@ void MainWindow::pp1()
         lad.push_back(i.toInt());
     if (file->fileName() != "") lb4->setText("Лад: " + QFileInfo(*file).fileName().remove(".lad"));
     file->close();
-    if (!lad.empty() && !acc.empty()) pb0->setDisabled(false);
+    check();
 }
 
 void MainWindow::pp2()
@@ -74,7 +87,7 @@ void MainWindow::pp2()
     }
     if (file->fileName() != "") lb5->setText("Аккомпанемент: " + QFileInfo(*file).fileName().remove(".acc"));
     file->close();
-    if (!lad.empty() && !acc.empty()) pb0->setDisabled(false);
+    check();
 }
 
 
@@ -106,6 +119,7 @@ MainWindow::MainWindow(QWidget *parent)
     lm->addWidget(cb2);
     lm->addWidget(lb3);
     lm->addWidget(cb3);
+    lm->addWidget(ch1);
     lm->addWidget(lb4);
     lm->addWidget(lb5);
     lm->addLayout(lh);
@@ -115,6 +129,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(pb0, &QPushButton::clicked, this, &enter);
     QObject::connect(pb1, &QPushButton::clicked, this, &pp1);
     QObject::connect(pb2, &QPushButton::clicked, this, &pp2);
+    QObject::connect(ch1, &QCheckBox::clicked, this, &pp0);
 }
 
 MainWindow::~MainWindow()
