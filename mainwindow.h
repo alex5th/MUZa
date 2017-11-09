@@ -14,7 +14,6 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QDebug>
-#include <dir.h>
 #include <song.h>
 
 class MainWindow : public QMainWindow

@@ -117,7 +117,7 @@ Output::Output(Song s, QList<int> lad, int tonic, int tempo):song(s), tonic(toni
         tonToCur += i;
     }
 
-    mkdir("files");
+    QDir().mkdir("files");
     int fileNumber = 0;
     do
     {

@@ -8,7 +8,7 @@ void MainWindow::enter()
     QDialog t;
     t.setWindowFlags(Qt::WindowCloseButtonHint);
     t.setWindowTitle("Композиция " + b.getFileName() + " готова");
-    t.setFixedSize(250, 1);
+    t.setFixedSize(450, 1);
     t.setModal(true);
     t.exec();
 }
@@ -28,7 +28,7 @@ void MainWindow::pp0()
 void MainWindow::pp1()
 {
     QString fn;
-    mkdir("lad");
+    QDir().mkdir("lad");
     fn = QFileDialog::getOpenFileName(0,QString("Выберите нужный лад"),"lad",QString("*.lad"));
     file->setFileName(fn);
     file->open(QIODevice::ReadOnly);
@@ -53,7 +53,7 @@ void MainWindow::pp1()
 void MainWindow::pp2()
 {
     QString fn;
-    mkdir("accompaniment");
+    QDir().mkdir("accompaniment");
     fn = QFileDialog::getOpenFileName(0,QString("Выберите нужный аккомпанемент"),"accompaniment",QString("*.acc"));
     file->setFileName(fn);
     file->open(QIODevice::ReadOnly);
@@ -126,10 +126,10 @@ MainWindow::MainWindow(QWidget *parent)
     lh->addWidget(pb1);
     lh->addWidget(pb2);
     lh->addWidget(pb0);
-    QObject::connect(pb0, &QPushButton::clicked, this, &enter);
-    QObject::connect(pb1, &QPushButton::clicked, this, &pp1);
-    QObject::connect(pb2, &QPushButton::clicked, this, &pp2);
-    QObject::connect(ch1, &QCheckBox::clicked, this, &pp0);
+    QObject::connect(pb0, &QPushButton::clicked, this, &MainWindow::enter);
+    QObject::connect(pb1, &QPushButton::clicked, this, &MainWindow::pp1);
+    QObject::connect(pb2, &QPushButton::clicked, this, &MainWindow::pp2);
+    QObject::connect(ch1, &QCheckBox::clicked, this, &MainWindow::pp0);
 }
 
 MainWindow::~MainWindow()

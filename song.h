@@ -3,6 +3,7 @@
 #include <note.h>
 #include <QVector>
 #include <QDate>
+#include <math.h>
 
 class Song
 {

@@ -6,8 +6,8 @@
 #include <QString>
 #include <QDate>
 #include <QMap>
+#include <QDir>
 #include <song.h>
-#include <dir.h>
 
 class Output
 {
