@@ -10,7 +10,7 @@ struct Note
     int duration;
     bool dot;
     Note();
-    Note(int d, int n, bool ch);
+    Note(const int &d, const int &n, const bool &ch);
 };
 
 #endif // NOTE_H

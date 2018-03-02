@@ -11,8 +11,8 @@ class Song
 public:
     Song(int ladSize, QVector<QVector<int>> acc, int lengthAcc);
     int getCountBars();
-    int getCountNote(int p, int x);
-    const Note operator ()(int p, int x, int y);
+    int getCountNote(const int &p, const int &x);
+    const Note operator ()(const int &p, const int &x, const int &y);
 };
 
 #endif // SONG_H

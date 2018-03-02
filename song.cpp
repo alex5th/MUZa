@@ -6,12 +6,12 @@ int Song::getCountBars()
     return p[0].size();
 }
 
-int Song::getCountNote(int p, int x)
+int Song::getCountNote(const int &p, const int &x)
 {
     return this->p[p][x].size();
 }
 
-const Note Song::operator ()(int p, int x, int y)
+const Note Song::operator ()(const int &p, const int &x, const int &y)
 {
     return this->p[p][x][y];
 }

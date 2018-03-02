@@ -18,9 +18,9 @@ class Output
     int tonic;
     int tempo;
 public:
-    Output(Song s, QList<int> lad, int tonic, int tempo);
-    void instrument(int p, QString n);
-    void createPart(int p);
+    Output(const Song &s, const QList<int> &lad, const int &tonic, const int &tempo);
+    void instrument(const int &p, const QString &n);
+    void createPart(const int &p);
     QString getFileName();
 };
 

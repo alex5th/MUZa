@@ -5,7 +5,7 @@ QString Output::getFileName()
     return file.fileName().remove("files/");
 }
 
-void Output::instrument(int p, QString n)
+void Output::instrument(const int &p, const QString &n)
 {
     stream.writeStartElement("score-part");
     stream.writeAttribute("id", "P" + QString::number(p));
@@ -19,7 +19,7 @@ void Output::instrument(int p, QString n)
     stream.writeEndElement();
 }
 
-void Output::createPart(int p)
+void Output::createPart(const int &p)
 {
     stream.writeStartElement("part");
     stream.writeAttribute("id", "P" + QString::number(p));
@@ -96,7 +96,8 @@ void Output::createPart(int p)
     stream.writeEndElement();
 }
 
-Output::Output(Song s, QList<int> lad, int tonic, int tempo):song(s), tonic(tonic), tempo(tempo)
+Output::Output(const Song &s, const QList<int> &lad, const int &tonic, const int &tempo)
+    :song(s), tonic(tonic), tempo(tempo)
 {
     int tonToCur = 0;
     for(int i: lad)
