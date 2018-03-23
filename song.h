@@ -13,6 +13,7 @@ public:
     int getCountBars();
     int getCountNote(const int &p, const int &x);
     const Note operator ()(const int &p, const int &x, const int &y);
+    QVector<QVector<int>> generateAcc();
 };
 
 #endif // SONG_H

@@ -2,8 +2,8 @@
 
 void MainWindow::enter()
 {
-    QVector<QVector<int>> accSend;
-    Song s(lad.size(), (ch1->isChecked())? accSend : acc, cb2->currentText().toInt());
+    QVector<QVector<int>> emptyAcc;
+    Song s(lad.size(), (ch1->isChecked())? emptyAcc : acc, cb2->currentText().toInt());
     Output b(s, lad, cb3->currentIndex(), cb1->currentText().toInt());
     QDialog t;
     t.setWindowFlags(Qt::WindowCloseButtonHint);
