@@ -5,10 +5,10 @@
 
 struct Note
 {
-    int degree;
-    bool chord;
-    int duration;
-    bool dot;
+    int m_degree;
+    bool m_chord;
+    int m_duration;
+    bool m_dot;
     Note();
     Note(const int &d, const int &n, const bool &ch);
 };

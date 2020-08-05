@@ -9,11 +9,11 @@ class Song
 {
     QVector<QVector<Note>> p[2]; //партия аккомпонимента
 public:
-    Song(int ladSize, QVector<QVector<int>> acc, int lengthAcc);
+    Song(int ladSize, QVector<QVector<int>> accomp, int lengthAcc);
     int getCountBars();
     int getCountNote(const int &p, const int &x);
     const Note operator ()(const int &p, const int &x, const int &y);
-    QVector<QVector<int>> generateAcc();
+    QVector<QVector<int>> generateAccomp();
 };
 
 #endif // SONG_H

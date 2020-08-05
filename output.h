@@ -11,16 +11,16 @@
 
 class Output
 {
-    QXmlStreamWriter stream;
-    QStringList steps;
-    QFile file;
-    Song song;
-    int tonic;
-    int tempo;
+    QXmlStreamWriter m_stream;
+    QStringList m_steps;
+    QFile m_file;
+    Song m_song;
+    int m_tonic;
+    int m_tempo;
 public:
-    Output(const Song &s, const QList<int> &lad, const int &tonic, const int &tempo);
-    void instrument(const int &p, const QString &n);
-    void createPart(const int &p);
+    Output(const Song &song, const QList<int> &lad, const int &tonic, const int &tempo);
+    void createInstrument(const int &numInstrument, const QString &name);
+    void createPart(const int &part);
     QString getFileName();
 };
 

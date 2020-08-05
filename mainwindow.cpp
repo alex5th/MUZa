@@ -1,92 +1,92 @@
 #include "mainwindow.h"
 
-void MainWindow::enter()
+void MainWindow::createSong()
 {
     QVector<QVector<int>> emptyAcc;
-    Song s(lad.size(), (ch1->isChecked())? emptyAcc : acc, cb2->currentText().toInt());
-    Output b(s, lad, cb3->currentIndex(), cb1->currentText().toInt());
-    QDialog t;
-    t.setWindowFlags(Qt::WindowCloseButtonHint);
-    t.setWindowTitle("Композиция " + b.getFileName() + " готова");
-    t.setFixedSize(450, 1);
-    t.setModal(true);
-    t.exec();
+    Song tmp_song(m_lad.size(), (checkBoxAuto->isChecked())? emptyAcc : m_accomp, comboBoxAccArrayLength->currentText().toInt());
+    Output tmp_output(tmp_song, m_lad, comboBoxTonic->currentIndex(), comboBoxTempo->currentText().toInt());
+    QDialog tmp_dialog;
+    tmp_dialog.setWindowFlags(Qt::WindowCloseButtonHint);
+    tmp_dialog.setWindowTitle("Композиция " + tmp_output.getFileName() + " готова");
+    tmp_dialog.setFixedSize(450, 1);
+    tmp_dialog.setModal(true);
+    tmp_dialog.exec();
 }
 
 void MainWindow::check()
 {
-    pb0->setDisabled(((!acc.empty() || ch1->isChecked()) && !lad.empty())? false : true);
+    buttonCreateSong->setDisabled(((!m_accomp.empty() || checkBoxAuto->isChecked()) && !m_lad.empty())? false : true);
 }
 
-void MainWindow::pp0()
+void MainWindow::setAuto()
 {
-    pb2->setDisabled((ch1->isChecked())? true : false);
-    lb5->setDisabled((ch1->isChecked())? true : false);
+    buttonLoadAccomp->setDisabled((checkBoxAuto->isChecked())? true : false);
+    labelAccomp->setDisabled((checkBoxAuto->isChecked())? true : false);
     check();
 }
 
-void MainWindow::pp1()
+void MainWindow::loadLad()
 {
     QString fn;
     QDir().mkdir("lad");
     fn = QFileDialog::getOpenFileName(0,QString("Выберите нужный лад"),"lad",QString("*.lad"));
-    file->setFileName(fn);
-    file->open(QIODevice::ReadOnly);
-    QStringList temp = QString(file->readAll()).split(QRegExp("[\\D]"),QString::SkipEmptyParts);
+    m_file->setFileName(fn);
+    m_file->open(QIODevice::ReadOnly);
+    QStringList temp = QString(m_file->readAll()).split(QRegExp("[\\D]"),QString::SkipEmptyParts);
     int test = 0;
     for (QString i: temp)
         test += i.toInt();
     if (fn!="")
         if (test != 12)
         {
-            pp1();
+            loadLad();
             return;
         }
-        else lad.clear();
+        else m_lad.clear();
     for (QString i: temp)
-        lad.push_back(i.toInt());
-    if (file->fileName() != "") lb4->setText("Лад: " + QFileInfo(*file).fileName().remove(".lad"));
-    file->close();
+        m_lad.push_back(i.toInt());
+    if (m_file->fileName() != "") labelLad->setText("Лад: " + QFileInfo(*m_file).fileName().remove(".lad"));
+    m_file->close();
     check();
 }
 
-void MainWindow::pp2()
+void MainWindow::loadAccomp()
 {
     QString fn;
     QDir().mkdir("accompaniment");
     fn = QFileDialog::getOpenFileName(0,QString("Выберите нужный аккомпанемент"),"accompaniment",QString("*.acc"));
-    file->setFileName(fn);
-    file->open(QIODevice::ReadOnly);
+    m_file->setFileName(fn);
+    m_file->open(QIODevice::ReadOnly);
     int test = 0;
-    while (!file->atEnd())
+    while (!m_file->atEnd())
     {
-        QStringList temp = QString(file->readLine()).split(QRegExp("[\\D]"), QString::SkipEmptyParts);
+        QStringList temp = QString(m_file->readLine()).split(QRegExp("[\\D]"), QString::SkipEmptyParts);
         if ((temp[0] == "5") || (temp[0] == "7") || (temp[0] < "1") || (temp[0] > "8"))
         {
-            pp2();
+            loadAccomp();
             return;
         }
         test += temp[0].toInt();
     }
     qDebug() << test;
-    file->close();
-    file->open(QIODevice::ReadOnly);
+    m_file->close();
+    m_file->open(QIODevice::ReadOnly);
     if (fn != "")
         if (test % 8 != 0)
         {
-            pp2();
+            loadAccomp();
             return;
         }
-        else acc.clear();
-    while (!file->atEnd())
+        else m_accomp.clear();
+    while (!m_file->atEnd())
     {
-        acc.resize(acc.length() + 1);
-        QStringList temp = QString(file->readLine()).split(QRegExp("[\\D]"), QString::SkipEmptyParts);
+        m_accomp.resize(m_accomp.length() + 1);
+        QStringList temp = QString(m_file->readLine()).split(QRegExp("[\\D]"), QString::SkipEmptyParts);
         for (QString j: temp)
-            acc[acc.length() - 1].push_back(j.toInt());
+            m_accomp[m_accomp.length() - 1].push_back(j.toInt());
     }
-    if (file->fileName() != "") lb5->setText("Аккомпанемент: " + QFileInfo(*file).fileName().remove(".acc"));
-    file->close();
+    if (m_file->fileName() != "") labelAccomp->setText("Аккомпанемент: " + QFileInfo(*m_file).fileName().remove(".acc"));
+    m_file->close();
     check();
 }
 
@@ -94,42 +94,42 @@ void MainWindow::pp2()
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    pb0->setDisabled(true);
+    buttonCreateSong->setDisabled(true);
 
-    lb0->setWordWrap(true);
+    labelMainAbout->setWordWrap(true);
 
-    tl1 << "80" <<"100" << "120" << "140" << "160";
-    cb1->addItems(tl1);
+    listTempo << "80" <<"100" << "120" << "140" << "160";
+    comboBoxTempo->addItems(listTempo);
 
-    tl2 << "2" <<"4" << "8";
-    cb2->addItems(tl2);
+    listAccArrayLength << "2" <<"4" << "8";
+    comboBoxAccArrayLength->addItems(listAccArrayLength);
 
-    tl3 << "До" <<"До♯/Ре♭" << "Ре" << "Ре♯/Ми♭" << "Ми" <<
+    listTonic << "До" <<"До♯/Ре♭" << "Ре" << "Ре♯/Ми♭" << "Ми" <<
            "Фа" <<"Фа♯/Соль♭" << "Соль" << "Соль♯/Ля♭" << "Ля" << "Ля♯/Си♭" << "Си";
-    cb3->addItems(tl3);
-    cb3->setMaxVisibleItems(12);
+    comboBoxTonic->addItems(listTonic);
+    comboBoxTonic->setMaxVisibleItems(12);
 
     this->setCentralWidget(w);
     this->setWindowTitle("Автокомпозитор МУЗа");
-    w->setLayout(lm);
-    lm->addWidget(lb0);
-    lm->addWidget(lb1);
-    lm->addWidget(cb1);
-    lm->addWidget(lb2);
-    lm->addWidget(cb2);
-    lm->addWidget(lb3);
-    lm->addWidget(cb3);
-    lm->addWidget(ch1);
-    lm->addWidget(lb4);
-    lm->addWidget(lb5);
-    lm->addLayout(lh);
-    lh->addWidget(pb1);
-    lh->addWidget(pb2);
-    lh->addWidget(pb0);
-    QObject::connect(pb0, &QPushButton::clicked, this, &MainWindow::enter);
-    QObject::connect(pb1, &QPushButton::clicked, this, &MainWindow::pp1);
-    QObject::connect(pb2, &QPushButton::clicked, this, &MainWindow::pp2);
-    QObject::connect(ch1, &QCheckBox::clicked, this, &MainWindow::pp0);
+    w->setLayout(layoutV);
+    layoutV->addWidget(labelMainAbout);
+    layoutV->addWidget(labelTempo);
+    layoutV->addWidget(comboBoxTempo);
+    layoutV->addWidget(labelAccArrayLength);
+    layoutV->addWidget(comboBoxAccArrayLength);
+    layoutV->addWidget(labelTonic);
+    layoutV->addWidget(comboBoxTonic);
+    layoutV->addWidget(checkBoxAuto);
+    layoutV->addWidget(labelLad);
+    layoutV->addWidget(labelAccomp);
+    layoutV->addLayout(layoutH);
+    layoutH->addWidget(buttonLoadLad);
+    layoutH->addWidget(buttonLoadAccomp);
+    layoutH->addWidget(buttonCreateSong);
+    QObject::connect(buttonCreateSong, &QPushButton::clicked, this, &MainWindow::createSong);
+    QObject::connect(buttonLoadLad, &QPushButton::clicked, this, &MainWindow::loadLad);
+    QObject::connect(buttonLoadAccomp, &QPushButton::clicked, this, &MainWindow::loadAccomp);
+    QObject::connect(checkBoxAuto, &QCheckBox::clicked, this, &MainWindow::setAuto);
 }
 
 MainWindow::~MainWindow()
